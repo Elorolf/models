@@ -22,6 +22,7 @@ from preprocessing import cifarnet_preprocessing
 from preprocessing import inception_preprocessing
 from preprocessing import lenet_preprocessing
 from preprocessing import vgg_preprocessing
+from preprocessing import alexnet_preprocessing
 
 
 def get_preprocessing(name, is_training=False, use_grayscale=False):
@@ -76,6 +77,7 @@ def get_preprocessing(name, is_training=False, use_grayscale=False):
       'vgg_a': vgg_preprocessing,
       'vgg_16': vgg_preprocessing,
       'vgg_19': vgg_preprocessing,
+      'alexnet_v2': inception_preprocessing,
   }
 
   if name not in preprocessing_fn_map:
