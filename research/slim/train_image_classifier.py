@@ -68,11 +68,11 @@ tf.app.flags.DEFINE_integer(
     'The frequency with which logs are print.')
 
 tf.app.flags.DEFINE_integer(
-    'save_summaries_secs', 600,
+    'save_summaries_secs', 30,
     'The frequency with which summaries are saved, in seconds.')
 
 tf.app.flags.DEFINE_integer(
-    'save_interval_secs', 600,
+    'save_interval_secs', 30,
     'The frequency with which the model is saved, in seconds.')
 
 tf.app.flags.DEFINE_integer(
@@ -589,6 +589,7 @@ def main(_):
     ###########################
     # Kicks off the training. #
     ###########################
+    saver = tf.train.Saver(max_to_keep=100000)
     slim.learning.train(
         train_tensor,
         logdir=FLAGS.train_dir,
@@ -600,7 +601,8 @@ def main(_):
         log_every_n_steps=FLAGS.log_every_n_steps,
         save_summaries_secs=FLAGS.save_summaries_secs,
         save_interval_secs=FLAGS.save_interval_secs,
-        sync_optimizer=optimizer if FLAGS.sync_replicas else None)
+        sync_optimizer=optimizer if FLAGS.sync_replicas else None,
+        saver=saver)
 
 
 if __name__ == '__main__':

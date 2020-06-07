@@ -168,13 +168,18 @@ def main(_):
             logits, labels, 5),
     })
 
+    ### Custom change : add accuracy in summary to show it in tensorboard
+    #summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
+
     # Print the summaries to screen.
     for name, value in names_to_values.items():
       summary_name = 'eval/%s' % name
       op = tf.summary.scalar(summary_name, value, collections=[])
+      #summaries.add(op)
       op = tf.Print(op, [value], summary_name)
       tf.add_to_collection(tf.GraphKeys.SUMMARIES, op)
-
+      
+    
     # TODO(sguada) use num_epochs=1
     if FLAGS.max_num_batches:
       num_batches = FLAGS.max_num_batches
@@ -188,6 +193,9 @@ def main(_):
       checkpoint_path = FLAGS.checkpoint_path
 
     tf.logging.info('Evaluating %s' % checkpoint_path)
+    
+    # Merge all summaries together.
+    #summary_op = tf.summary.merge(list(summaries), name='summary_op')
 
     slim.evaluation.evaluate_once(
         master=FLAGS.master,
@@ -196,7 +204,7 @@ def main(_):
         num_evals=num_batches,
         eval_op=list(names_to_updates.values()),
         variables_to_restore=variables_to_restore)
-
+        
 
 if __name__ == '__main__':
   tf.app.run()

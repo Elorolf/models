@@ -1,10 +1,16 @@
 #!bin/sh
-DATASET_DIR=/home/app/data/ISIC/ISIC-images-preprocessed-sorted/train
-CHECKPOINT_FILE=/home/app/data/ISIC/ISIC-images-preprocessed-sorted/alexnet/model.ckpt-30000
-python eval_image_classifier.py \
-    --alsologtostderr \
-    --checkpoint_path=${CHECKPOINT_FILE} \
-    --dataset_dir=${DATASET_DIR} \
-    --dataset_name=isic \
-    --dataset_split_name=validation \
-    --model_name=alexnet_v2
+DATASET_DIR=/home/app/data/ISIC/trains/train_7_shards_256
+EVAL_DIR=/home/app/data/ISIC/models/eval_resnet50_v1_11K_256
+
+for i in 0 79 184 291 397 505 611 718 825 933 1040 1147 1254 1361 1467 1573 1681 1787 1894 2001 2100 2199 2299 2404 2511 2611 2710 2812 2916 3025 3131 3234 3339 3445 3553 3660 3767 3872 3978 4084 4191 4295 4402 4507 4613 4717 4822 4925 5031 5137 5241 5345 5449 5554 5659 5765 5869 5974 6079 6184 6291 6395 6501 6605 6713 6818 6925 7032 7137 7244 7347 7452 7553 7657 7759 7861 7964 8067 8171 8273 8373 8475 8577 8683 8785 8888 8988 9088 9193 9297 9402 9506 9610 9713 9819 9922 10026 10129 10235 10339 10444 10549 10655 10763 10869 10977 11000   
+do
+    CHECKPOINT_FILE=/home/app/data/ISIC/models/train_resnet50_v1_11K_256/model.ckpt-$i
+    python eval_image_classifier.py \
+	--alsologtostderr \
+	--checkpoint_path=${CHECKPOINT_FILE} \
+	--dataset_dir=${DATASET_DIR} \
+	--eval_dir=${EVAL_DIR} \
+	--dataset_name=isic \
+	--dataset_split_name=validation \
+	--model_name=resnet_v1_50
+done

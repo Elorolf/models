@@ -29,14 +29,14 @@ slim = tf.contrib.slim
 _FILE_PATTERN = 'isic_%s_*.tfrecord'
  
 # DATASET-VARIABLE: splits the dataset into 80 % for training and 20 % for evaluation
-SPLITS_TO_SIZES = {'train': 19107, 'validation': 4776}
+SPLITS_TO_SIZES = {'train': 44363, 'validation': 11090}
  
 # DATASET-VARIABLE: num classes of the houseplants dataset
 _NUM_CLASSES = 3
  
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A color image.',
-    'label': 'A single integer between 0 and 26',
+    'label': 'A single integer between 0 and 3',
 }
  
  
